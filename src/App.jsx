@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ProductList from './components/ProductList';
+import {Button} from '@mui/material';
 
 const App = () => {
   const products = [
@@ -9,7 +10,7 @@ const App = () => {
     {id: '4', name: 'Headphones', price: 100, inStock: true},
   ]
 
-  // TODO: Implement state to manage filtering
+  const [showOutOfStock, setShowOutOfStock] = useState(true)
 
   // TODO: Implement logic to filter products based on availability
 
@@ -17,7 +18,7 @@ const App = () => {
     <div>
       <h1>Product Dashboard</h1>
       
-      {/* TODO: Add buttons to allow filtering by availability */}
+      <Button variant="contained">Add Product</Button>
 
       <ProductList products={products}/>
       
