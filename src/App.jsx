@@ -1,29 +1,55 @@
 import React, { useState } from 'react';
 import ProductList from './components/ProductList';
-import {Button} from '@mui/material';
+import { Button, ButtonGroup } from '@mui/material';
 
-const App = () => {
-  const products = [
-    {id: '1', name: 'Laptop', price: 400, inStock: true},
-    {id: '2', name: 'Tablet', price: 200, inStock: false},
-    {id: '3', name: 'Phone', price: 300, inStock: true},
-    {id: '4', name: 'Headphones', price: 100, inStock: true},
-  ]
+function App() {
+  const [products, setProducts] = useState([
+    { id: 1, name: 'Laptop', price: '$999', inStock: true },
+    { id: 2, name: 'Phone', price: '$699', inStock: false },
+    { id: 3, name: 'Tablet', price: '$499', inStock: true },
+  ]);
 
-  const [showOutOfStock, setShowOutOfStock] = useState(true)
+  const [filter, setFilter] = useState('all'); // 'all', 'inStock', 'outOfStock'
 
-  // TODO: Implement logic to filter products based on availability
+  const handleRemoveProduct = (productId) => {
+    setProducts(products.filter(product => product.id !== productId));
+  };
+
+  // Filter products based on availability
+  const filteredProducts = products.filter(product => {
+    if (filter === 'inStock') return product.inStock;
+    if (filter === 'outOfStock') return !product.inStock;
+    return true; // 'all'
+  });
 
   return (
     <div>
       <h1>Product Dashboard</h1>
       
-      <Button variant="contained">Add Product</Button>
+      <ButtonGroup variant="contained" style={{ marginBottom: '20px' }}>
+        <Button 
+          onClick={() => setFilter('all')}
+          color={filter === 'all' ? 'primary' : 'inherit'}
+        >
+          All Products
+        </Button>
+        <Button 
+          onClick={() => setFilter('inStock')}
+          color={filter === 'inStock' ? 'primary' : 'inherit'}
+        >
+          In Stock
+        </Button>
+        <Button 
+          onClick={() => setFilter('outOfStock')}
+          color={filter === 'outOfStock' ? 'primary' : 'inherit'}
+        >
+          Out of Stock
+        </Button>
+      </ButtonGroup>
 
-      <ProductList products={products}/>
-      
+      <ProductList products={filteredProducts} onRemoveProduct={handleRemoveProduct} />
     </div>
   );
-};
+}
 
 export default App;

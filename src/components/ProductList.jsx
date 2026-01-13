@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 
-const ProductList = ({ products }) => {
+const ProductList = ({ products, onRemoveProduct }) => {
   // Check if no products are in stock
   const inStockProducts = products.filter(product => product.inStock);
   const hasNoStock = inStockProducts.length === 0;
@@ -19,7 +19,13 @@ const ProductList = ({ products }) => {
 
       <>
         {products.map((product) => (
-          <ProductCard key={product.id} name={product.name} price={product.price} stock={product.inStock}/>
+          <ProductCard 
+            key={product.id}
+            name={product.name} 
+            price={product.price} 
+            stock={product.inStock}
+            onRemove={() => onRemoveProduct(product.id)}
+          />
         ))}
       </>
     </>
